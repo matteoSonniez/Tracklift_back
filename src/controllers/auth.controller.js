@@ -14,17 +14,17 @@ exports.register = async (req, res, next) => {
     password: req.body.password,
     email: req.body.email,
     phone: req.body.phone,
-    userType: req.body.userType,
-    address: {
-      city: req.body.address.city,
-      zipCode: req.body.address.zipCode,
-      street: req.body.address.street
-    }
+    company: req.body.companyId
   });
 
   try {
     // save email in DB
     const newUserToSave = await newUser.save();
+    if(req.body.companyId) {
+      const company = await Company.findById(req.body.companyId);
+      company.user.push(newUserToSave._id);
+      await company.save();
+    }
     //create new Token
     let userToken = signJwt({
       id: newUserToSave._id,

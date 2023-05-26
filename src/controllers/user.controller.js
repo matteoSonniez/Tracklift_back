@@ -10,22 +10,30 @@ exports.getMe = async (req, res, next) => {
     //find user and populate freelance && company
     const me = await User.findById(req.userToken.body.id).populate([
       {
-        path: "freelance",
-        model: "Freelance",
-        populate: [
-          {
-            path: "skills",
-            model: "Skill",
-          },
-          {
-            path: "activity",
-            model: "Activity",
-          },
-        ]
-      },
-      {
         path: "company",
         model: "Company"
+      },
+      {
+        path: "worksite",
+        model: "Worksite",
+        populate: [
+          {
+            path: "build_owner",
+            model: "Company",
+          },
+          {
+            path: "contact_mo",
+            model: "User",
+          },
+          {
+            path: "ascensoriste",
+            model: "Company",
+          },
+          {
+            path: "contact_ascensoriste",
+            model: "User",
+          }
+        ]
       }
     ]);
     if (!me) {
@@ -43,6 +51,8 @@ exports.getMe = async (req, res, next) => {
     next(err);
   }
 }
+
+
 exports.getMyFreelance = async (req, res, next) => {
   try {
     //find user and populate freelance && company

@@ -34,43 +34,17 @@ const userSchema = mongoose.Schema({
     required: true,
     default: false
   },
-  address: {
-    street: {
-      type: String,
-      maxLength: 50,
-      minLength: 2,
-      lowercase: true,
-      required: true
-    },
-    zipCode: {
-      type: Number,
-      maxLength: 5,
-      minLength: 5,
-      required: true
-    },
-    city: {
-      type: String,
-      maxLength: 50,
-      minLength: 2,
-      lowercase: true,
-      required: true
-    }
-  },
   password: {
     type: String,
     required: true
   },
-  freelance: {
-    type: mongoose.Schema.Types.ObjectId, ref: 'Freelance',
-  },
   company: {
-    type: mongoose.Schema.Types.ObjectId, ref: 'Company',
+    type: mongoose.Schema.Types.ObjectId, ref: 'Company'
   },
-  userType: {
-    type: String,
-    enum: ['FREELANCE', 'COMPANY'],
+  worksite: [{
+    type: mongoose.Schema.Types.ObjectId, ref: 'Worksite',
     required: true
-  }
+  }]
 },
   {
     timestamps: true

@@ -1,16 +1,11 @@
 const mongoose = require('mongoose');
 
-const companySchema = mongoose.Schema({
+const workSiteSchema = mongoose.Schema({
   name: {
     type: String,
     maxLength: 50,
     minLength: 2,
     lowercase: true,
-    required: true
-  },
-  companyType: {
-    type: String,
-    enum: ['ADMIN','MAITRE-OUVRAGE', 'ASCENSORISTE'],
     required: true
   },
   address: {
@@ -35,18 +30,24 @@ const companySchema = mongoose.Schema({
       required: true
     }
   },
-  user: [{
-    type: mongoose.Schema.Types.ObjectId, ref: 'User',
+  build_owner: {
+    type: mongoose.Schema.Types.ObjectId, ref: 'Company',
     required: true
-  }],
-  worksite: [{
-    type: mongoose.Schema.Types.ObjectId, ref: 'Worksite',
+  },
+  contact_mo: {
+    type: mongoose.Schema.Types.ObjectId, ref: 'User'
+  },
+  ascensoriste: {
+    type: mongoose.Schema.Types.ObjectId, ref: 'Company',
     required: true
-  }]
+  },
+  contact_ascensoriste: {
+    type: mongoose.Schema.Types.ObjectId, ref: 'User'
+  },
 },
   {
     timestamps: true
   }
 )
 
-module.exports = mongoose.model('Company', companySchema);
+module.exports = mongoose.model('Worksite', workSiteSchema);
