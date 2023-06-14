@@ -70,3 +70,18 @@ exports.createWorksite = async (req, res, next) => {
     }
   
   }
+
+  exports.getWorkSites = async (req, res, next) => {
+    try {
+      // find all users
+      const worksites = await Worksite.find();
+      //return users
+      res.send({
+        success: true,
+        worksites: worksites
+      });
+    }
+    catch (err) {
+      next(err)
+    }
+  }

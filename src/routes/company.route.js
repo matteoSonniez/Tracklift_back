@@ -6,5 +6,7 @@ const verifyIsAdmin = require('../middlewares/verifyIsAdmin');
 
 router.post("/create", verifyToken, verifyIsAdmin, companyController.createCompany);
 router.get("/get", verifyToken, companyController.getMyCompany);
+router.get("/get-all", verifyToken, verifyIsAdmin, companyController.getCompanys);
+router.get("/get-one/:id", verifyToken, verifyIsAdmin, companyController.getOneCompany);
 
 module.exports = router;

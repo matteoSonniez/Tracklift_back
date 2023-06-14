@@ -44,6 +44,9 @@ const workSiteSchema = mongoose.Schema({
   contact_ascensoriste: {
     type: mongoose.Schema.Types.ObjectId, ref: 'User'
   },
+  elevator: [{
+    type: mongoose.Schema.Types.ObjectId, ref: 'Elevator'
+  }]
 },
   {
     timestamps: true

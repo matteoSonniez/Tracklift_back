@@ -11,7 +11,12 @@ exports.getMe = async (req, res, next) => {
     const me = await User.findById(req.userToken.body.id).populate([
       {
         path: "company",
-        model: "Company"
+        model: "Company",
+        populate: 
+          {
+            path: "user",
+            model: "User",
+          }
       },
       {
         path: "worksite",
@@ -85,7 +90,8 @@ exports.getMyFreelance = async (req, res, next) => {
     next(err);
   }
 }
-//update logged user (base on token)
+
+/*
 exports.updateMe = async (req, res, next) => {
   try {
     // Find user and update
@@ -128,6 +134,27 @@ exports.updateMe = async (req, res, next) => {
       user: updatedUser
     });
   } catch (err) {
+    next(err)
+  }
+}
+*/
+
+exports.updateMe = async (req, res, next) => {
+  try {
+    // find user and update
+    const userToModify = await User.findByIdAndUpdate(req.userToken.body.id, req.body, { new: true });
+    if (!userToModify) {
+      const error = new Error("User not found")
+      error.status = 404
+      throw error;
+    }
+    //return user
+    res.send({
+      success: true,
+      user: userToModify
+    });
+  }
+  catch (err) {
     next(err)
   }
 }
@@ -224,8 +251,9 @@ exports.forgotPassword = async (req, res, next) => {
 exports.resetPassword = async (req, res, next) => {
   try {
     //find user
-    const user = await User.findOne({ email: req.userToken.body.email });
+    const user = await User.findById(req.userToken.body.id);
     //update password property with new one
+    console.log(user, "passssssssssssss")
     user.password = req.body.password;
     //save in DB
     await user.save();

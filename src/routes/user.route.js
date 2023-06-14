@@ -6,13 +6,13 @@ const verifyIsAdmin = require('../middlewares/verifyIsAdmin');
 const verifyIsFreelance = require('../middlewares/verifyIsFreelance');
 const verifyIsCompany = require('../middlewares/verifyIsCompany');
 
-router.get("/", verifyToken, userController.getMe);
+router.get("/get-me", verifyToken, userController.getMe);
 router.post("/my-freelance", verifyToken, verifyIsFreelance, userController.getMyFreelance);
 router.post("/forgot-password", userController.forgotPassword);
 router.post("/reset-password", verifyToken, userController.resetPassword);
 router.get("/admin/user/:id", verifyToken, verifyIsAdmin, userController.getUser);
-router.get('/admin/users', verifyToken, verifyIsAdmin, userController.getUsers)
-router.put("/", verifyToken, userController.updateMe);
+router.get('/get-all', verifyToken, verifyIsAdmin, userController.getUsers)
+router.put("/update-me", verifyToken, userController.updateMe);
 router.put("/company", verifyToken, verifyIsCompany, userController.updateMyCompany);
 router.put("/freelance", verifyToken, verifyIsFreelance,userController.updateMyFreelance);
 router.put("/admin/user/:id", verifyToken, verifyIsAdmin, userController.updateUser);

@@ -84,3 +84,33 @@ exports.createCompany = async (req, res, next) => {
       next(err);
     }
   }
+
+  exports.getCompanys = async (req, res, next) => {
+    try {
+      // find all users
+      const companys = await Company.find();
+      //return users
+      res.send({
+        success: true,
+        companys: companys
+      });
+    }
+    catch (err) {
+      next(err)
+    }
+  }
+
+  exports.getOneCompany = async (req, res, next) => {
+    try {
+      
+      const company = await Company.findById(req.params.id);
+     
+      res.send({
+        success: true,
+        company: company
+      });
+    }
+    catch (err) {
+      next(err)
+    }
+  }

@@ -42,6 +42,9 @@ const companySchema = mongoose.Schema({
   worksite: [{
     type: mongoose.Schema.Types.ObjectId, ref: 'Worksite',
     required: true
+  }],
+  elevator: [{
+    type: mongoose.Schema.Types.ObjectId, ref: 'Elevator'
   }]
 },
   {
